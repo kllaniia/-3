@@ -1,0 +1,76 @@
+body {
+    background-color: red; 
+    font-family: 'Bangers', cursive; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    flex-direction: column;
+    text-align: center;
+}
+
+h1 {
+    font-size: 40px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+#maze {
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    grid-template-rows: repeat(10, 40px);
+    gap: 2px;
+    margin-bottom: 20px;
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #aaa;
+    box-sizing: border-box;
+}
+
+.wall {
+    background-color: black; 
+}
+
+.path {
+    background-color: blue; 
+}
+
+.player {
+    background-color: red; 
+}
+
+#result {
+    display: none;
+    margin-top: 20px;
+    font-size: 30px;
+    color: white;
+}
+
+#loveImage {
+    width: 200px;
+    height: 200px;
+    margin-top: 20px;
+    transition: opacity 1s ease-in-out;
+}
+
+#loveImage.fadeIn {
+    opacity: 1;
+}
+
+#result.fadeIn {
+    opacity: 1;
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
