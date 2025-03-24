@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labirynt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .labirynt {
+            display: grid;
+            grid-template-columns: repeat(5, 50px);
+            grid-template-rows: repeat(5, 50px);
+            gap: 2px;
+            margin-top: 50px;
+            justify-content: center;
+        }
+
+        .cell {
+            width: 50px;
+            height: 50px;
+            background-color: #ddd;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cell.wall {
+            background-color: #333;
+        }
+
+        .cell.start {
+            background-color: #0f0;
+        }
+
+        .cell.end {
+            background-color: #f00;
+        }
+
+        .player {
+            background-color: #00f;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div class="labirynt">
+    <div class="cell start" id="start"></div>
+    <div class="cell wall"></div>
+    <div class="cell wall"></div>
+    <div class="cell wall"></div>
+    <div class="cell wall"></div>
+    <div class="cell wall"></div>
+    <div class="cell player" id="player"></div>
+    <div class="cell"></div>
+    <div class="cell wall"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell wall"></div>
+    <div class="cell wall"></div>
+    <div class="cell end"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+</div>
+
+<div id="message"></div>
+
+<script>
+    let player = document.getElementById('player');
+    let playerPos = { row: 1, col: 1 }; // Starting position of player
+    let message = document.getElementById('message');
+
+    const labirynt = [
+        ['start', 'empty', 'wall', 'wall', 'wall'],
+        ['empty', 'empty', 'wall', 'empty', 'empty'],
+        ['empty', 'wall', 'wall', 'empty', 'end'],
+        ['empty', 'empty', 'empty', 'empty', 'empty'],
+        ['wall', 'wall', 'wall', 'empty', 'empty']
+    ];
+
+    // Move player by updating the grid
+    function movePlayer(direction) {
+        let newRow = playerPos.row;
+        let newCol = playerPos.col;
+
+        if (direction === 'up') newRow--;
+        if (direction === 'down') newRow++;
+        if (direction === 'left') newCol--;
+        if (direction === 'right') newCol++;
+
+        if (labirynt[newRow] && labirynt[newRow][newCol] !== 'wall') {
+            playerPos.row = newRow;
+            playerPos.col = newCol;
+
+            // Update player position in the grid
+            updateGrid();
+            checkIfWon();
+        }
+    }
+
+    // Update the grid to show the player at new position
+    function updateGrid() {
+        const cells = document.querySelectorAll('.cell');
+        let idx = 0;
+        cells.forEach(cell => {
+            if (cell.classList.contains('player')) {
+                cell.classList.remove('player');
+            }
+            if (idx === playerPos.row * 5 + playerPos.col) {
+                cell.classList.add('player');
+            }
+            idx++;
+        });
+    }
+
+    // Check if player has won
+    function checkIfWon() {
+        if (playerPos.row === 2 && playerPos.col === 4) {
+            message.textContent = "Kocham Cię, I love you, Kanbghik <3";
+        }
+    }
+
+    // Handle keyboard input for moving player
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowUp') movePlayer('up');
+        if (event.key === 'ArrowDown') movePlayer('down');
+        if (event.key === 'ArrowLeft') movePlayer('left');
+        if (event.key === 'ArrowRight') movePlayer('right');
+    });
+</script>
+
+</body>
+</html>
