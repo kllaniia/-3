@@ -117,3 +117,4 @@ function showMessage() {
     document.getElementById('result').style.display = 'block';
     document.getElementById('loveImage').src = 'zdjecie.jpg'; 
 }
+
